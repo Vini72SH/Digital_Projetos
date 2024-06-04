@@ -1,0 +1,52 @@
+=== Assembly Teste de Instruções ===
+movh 2 ;; Teste do movh
+movl 1 ;; Teste do movl
+movr r[1] r[0]  ;; Teste do movr
+ld r[2] M[r[3]] ;; Teste do load
+;; Teste das instruções da ULA
+not r[3] r[2]  
+add r[2] r[1] 
+sub r[2] r[3] 
+and r[2] r[1] 
+or  r[3] r[1] 
+slr r[2] r[1] 
+srr r[2] r[1] 
+st  M[r[3]] r[2] ;; Teste do store
+ji 2 ;; Teste do ji
+ld r[0] M[r[1]] 
+brzi 3 ;; Se r[0] == 0, Salta para PC + 3 - Teste do brzi
+jr r[3] ;; Teste do jr
+movr r[2] r[0]  
+movl 16 
+movr r[3] r[0] 
+add r[3] r[0] 
+brzr r[2] r[0] ;; Se r[2] == 0; PC = r[0] (End do jr) - Teste do brzr
+
+=== Soma de Vetores ==
+
+movh 0
+movl 12
+movr r[1] r[0] ;; Guarda o endereço da memória que será utilizado para armazenar o endereço de salto.
+movl 10
+st M[r[1]] r[0] ;; Armazena o endereço de salto.
+movh 0
+movl 0
+movr r[2] r[0] ;; Carrega o endereço do segundo vetor em r[2].
+movh 16  
+movr r[3] r[0] ;; Carrega o endereço do segundo vetor em r[3].
+while:
+ld r[0] M[r[2]] ;; Carrega em r[0] o elemento do vetor 1.
+ld r[1] M[r[3]] ;; Carrega em r[1] o elemento do vetor 2.
+add r[1] r[0] ;; Soma os elementos dos vetores.
+st M[r[2]] r[1] ;; Salva na memória o resultado da soma.
+movh 0
+movl 1
+add r[2] r[0] ;; Incrementa o ponteiro para o endereço do vetor 1.
+add r[3] r[0] ;; Incrementa o ponteiro para o endereço do vetor 2.
+movr r[0] r[1]
+brzi 5 ;; Salto para fora do while.
+movh 0
+movl 12
+ld r[1] M[r[0]] ;; Carga do endereço de salto.
+jr while
+ji 0 - ;; Fim do Programa.
